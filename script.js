@@ -1,9 +1,4 @@
-const brigadeCycles = {
-A:["day","night","rest","off"],
-B:["night","rest","off","day"],
-C:["rest","off","day","night"],
-D:["off","day","night","rest"]
-};
+const shiftCycle = ["day","night","rest","off"];
 
 let selectedBrigade = localStorage.getItem("brigade") || "A";
 let currentYear = new Date().getFullYear();
@@ -20,10 +15,10 @@ const baseDate = new Date(2026, 2, 15);
 baseDate.setHours(0,0,0,0);
 
 const brigadeOffsets = {
-A:0,
-B:2,
-C:3,
-D:1
+A:3, // 2 бригада → выходной
+B:2, // 1 бригада → отсыпной
+C:1, // 4 бригада → ночь
+D:0  // 3 бригада → день
 };
 
 document.querySelectorAll(".brigade-btn").forEach(btn=>{
@@ -44,7 +39,7 @@ if(activeBtn) activeBtn.classList.add("active");
 
 function getShift(date){
 
-const cycle = brigadeCycles[selectedBrigade];
+const cycle = shiftCycle;
 const d = new Date(date);
 d.setHours(0,0,0,0);
 
